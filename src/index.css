@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: 'Migra', 'Migra Bold', 'Urbanist', serif;
+  --font-sans: 'Urbanist', sans-serif;
+
+  --color-dark: #10201c;
+  --color-dark-alt: #243240;
+  --color-light: #f8f7f4;
+  --color-light-alt: #eeece6;
+  --color-primary: #2b6c70;
+  --color-secondary: #4e8b8f;
+  --color-body: #31413f;
+  --color-divider: rgba(16, 32, 28, 0.1);
+  --color-divider-light: rgba(248, 247, 244, 0.22);
+}
+
+/* ── Base ─────────────────────────────────────────── */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-body);
+    background: var(--color-light);
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    color: var(--color-dark);
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1.15;
+  }
+}
+
+#root,
+main,
+main section {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* ── Scrollbar ────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 3px;
+}
+
+/* ── Selection ────────────────────────────────────── */
+
+::selection {
+  background: var(--color-secondary);
+  color: var(--color-dark);
+}
+
+/* ── Editorial visual fallbacks ───────────────────── */
+
+.editorial-hero-fallback,
+.editorial-portrait-fallback {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(78, 139, 143, 0.96), rgba(43, 108, 112, 0.72)),
+    linear-gradient(180deg, rgba(78, 139, 143, 0.24), rgba(248, 247, 244, 0));
+}
+
+.editorial-hero-fallback::before,
+.editorial-portrait-fallback::before {
+  content: '';
+  position: absolute;
+  inset: 11%;
+  border: 1px solid rgba(248, 247, 244, 0.22);
+}
+
+.editorial-hero-fallback::after {
+  content: '';
+  position: absolute;
+  right: 8%;
+  top: 10%;
+  width: min(38vw, 500px);
+  height: 78%;
+  border: 1px solid rgba(248, 247, 244, 0.28);
+  background:
+    linear-gradient(180deg, rgba(248, 247, 244, 0.18), rgba(248, 247, 244, 0.04)),
+    linear-gradient(135deg, rgba(78, 139, 143, 0.16), rgba(43, 108, 112, 0.28));
+}
+
+.editorial-portrait-fallback::after {
+  content: '';
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 12%;
+  height: 42%;
+  border-top: 1px solid rgba(248, 247, 244, 0.22);
+  background: linear-gradient(180deg, rgba(248, 247, 244, 0.08), rgba(43, 108, 112, 0));
+}
+
+.fine-grid {
+  background-image:
+    linear-gradient(rgba(16, 32, 28, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 32, 28, 0.06) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+@media (max-width: 767px) {
+  .editorial-hero-fallback::after {
+    left: 12%;
+    right: 12%;
+    top: 14%;
+    width: auto;
+    height: 68%;
+  }
+}
