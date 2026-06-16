@@ -1,5 +1,6 @@
 import { CalendarDays, Clock, MapPin, Users } from 'lucide-react'
 import Reveal from './Reveal'
+import { useOpenLeadModal } from '../useLeadModal'
 
 const details = [
   { icon: CalendarDays, label: '29 de agosto' },
@@ -8,9 +9,9 @@ const details = [
   { icon: Users, label: 'Vagas limitadas' },
 ]
 
-const CHECKOUT_URL = 'https://pay.kiwify.com.br/XRJXIBi'
-
 export default function Signup() {
+  const openModal = useOpenLeadModal()
+
   return (
     <section id="inscricao" className="bg-secondary py-28 md:py-40">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
@@ -71,14 +72,14 @@ export default function Signup() {
                 Garanta o menor valor enquanto há vagas disponíveis no 1º lote.
               </p>
 
-              <a
-                href={CHECKOUT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                id="signup-cta"
+                onClick={openModal}
                 className="mt-8 flex w-full items-center justify-center rounded-lg bg-primary px-8 py-4 text-center text-lg font-semibold text-white transition hover:bg-secondary hover:text-dark"
               >
                 Quero garantir minha vaga
-              </a>
+              </button>
             </aside>
           </div>
         </Reveal>
