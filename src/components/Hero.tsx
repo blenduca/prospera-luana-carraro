@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion'
 import { CalendarDays, Clock, MapPin } from 'lucide-react'
 import { useState } from 'react'
+import { useOpenLeadModal } from '../useLeadModal'
 
 export default function Hero() {
   const [desktopImageError, setDesktopImageError] = useState(false)
   const [mobileImageError, setMobileImageError] = useState(false)
   const assetBase = import.meta.env.BASE_URL
+  const openModal = useOpenLeadModal()
 
   return (
     <section className="relative overflow-hidden bg-secondary">
@@ -55,14 +57,14 @@ export default function Hero() {
               </span>
             </div>
 
-            <a
-              href="https://pay.kiwify.com.br/XRJXIBi"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              id="hero-cta-desktop"
+              onClick={openModal}
               className="mt-6 inline-flex items-center justify-center rounded-lg border border-white/35 bg-light px-8 py-3.5 text-base font-semibold text-primary shadow-[0_22px_70px_rgba(43,108,112,0.28)] transition hover:border-primary hover:bg-primary hover:text-white"
             >
               Quero garantir minha vaga
-            </a>
+            </button>
           </motion.div>
         </div>
       </div>
@@ -112,14 +114,14 @@ export default function Hero() {
               </span>
             </div>
 
-            <a
-              href="https://pay.kiwify.com.br/XRJXIBi"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              id="hero-cta-mobile"
+              onClick={openModal}
               className="mt-8 flex w-full items-center justify-center rounded-lg border border-white/35 bg-light px-8 py-4 text-center text-base font-semibold text-primary transition hover:border-primary hover:bg-primary hover:text-white"
             >
               Quero garantir minha vaga
-            </a>
+            </button>
           </motion.div>
         </div>
       </div>

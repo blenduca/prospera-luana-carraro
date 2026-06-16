@@ -10,10 +10,14 @@ import Testimonials from './components/Testimonials'
 import Signup from './components/Signup'
 import FAQ from './components/FAQ'
 import Footer from './components/Footer'
+import { LeadModalRoot } from './components/LeadModal'
 
 export default function App() {
   return (
     <>
+      {/* Modal de captação – se auto-gerencia via evento 'open-lead-modal' */}
+      <LeadModalRoot />
+
       <Header />
       <main className="pt-16 md:pt-[72px]">
         <Hero />
