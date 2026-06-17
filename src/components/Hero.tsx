@@ -81,7 +81,7 @@ export default function Hero() {
           />
         )}
 
-        <div className="relative flex min-h-[100svh] items-end px-5 pb-16 pt-[58vh]">
+        <div className="relative flex min-h-[100svh] items-end px-5 pb-16 pt-[44vh]">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
