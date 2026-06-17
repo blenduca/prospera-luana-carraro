@@ -47,6 +47,7 @@ export default function LeadModal({ isOpen, onClose }: Props) {
   const [email, setEmail] = useState('')
   const [telefone, setTelefone] = useState('')
   const [formState, setFormState] = useState<FormState>('idle')
+  const [errors, setErrors] = useState<{ nome?: string; email?: string; telefone?: string }>({})
 
   /* ── fechar com ESC ──────────────────────────────── */
   const handleKeyDown = useCallback(
@@ -83,9 +84,29 @@ export default function LeadModal({ isOpen, onClose }: Props) {
     return value
   }
 
+  /* ── validação ──────────────────────────────────── */
+  function validate() {
+    const newErrors: { nome?: string; email?: string; telefone?: string } = {}
+    if (!nome.trim()) newErrors.nome = 'Por favor, informe seu nome completo.'
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!email.trim()) newErrors.email = 'Por favor, informe seu e-mail.'
+    else if (!emailRegex.test(email)) newErrors.email = 'Informe um e-mail válido.'
+    const digits = telefone.replace(/\D/g, '')
+    if (!telefone.trim()) newErrors.telefone = 'Por favor, informe seu WhatsApp/telefone.'
+    else if (digits.length < 10) newErrors.telefone = 'Informe um número válido com DDD.'
+    return newErrors
+  }
+
   /* ── submit ──────────────────────────────────────── */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+
+    const validationErrors = validate()
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      return
+    }
+    setErrors({})
     setFormState('loading')
 
     const utms = getUtmParams()
@@ -190,14 +211,18 @@ export default function LeadModal({ isOpen, onClose }: Props) {
                   <input
                     id="lead-nome"
                     type="text"
-                    required
                     autoComplete="name"
                     placeholder="Seu nome"
                     value={nome}
-                    onChange={(e) => setNome(e.target.value)}
+                    onChange={(e) => { setNome(e.target.value); setErrors((prev) => ({ ...prev, nome: undefined })) }}
                     disabled={formState === 'loading' || formState === 'success'}
-                    className="w-full rounded-lg border border-divider bg-white px-4 py-3 text-sm text-dark placeholder-body/40 outline-none ring-0 transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-60"
+                    className={`w-full rounded-lg border bg-white px-4 py-3 text-sm text-dark placeholder-body/40 outline-none ring-0 transition focus:ring-2 disabled:opacity-60 ${
+                      errors.nome
+                        ? 'border-red-400 focus:border-red-400 focus:ring-red-200'
+                        : 'border-divider focus:border-primary focus:ring-primary/20'
+                    }`}
                   />
+                  {errors.nome && <p className="mt-1.5 text-xs text-red-500">{errors.nome}</p>}
                 </div>
 
                 <div>
@@ -210,14 +235,18 @@ export default function LeadModal({ isOpen, onClose }: Props) {
                   <input
                     id="lead-email"
                     type="email"
-                    required
                     autoComplete="email"
                     placeholder="seu@email.com"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => { setEmail(e.target.value); setErrors((prev) => ({ ...prev, email: undefined })) }}
                     disabled={formState === 'loading' || formState === 'success'}
-                    className="w-full rounded-lg border border-divider bg-white px-4 py-3 text-sm text-dark placeholder-body/40 outline-none ring-0 transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-60"
+                    className={`w-full rounded-lg border bg-white px-4 py-3 text-sm text-dark placeholder-body/40 outline-none ring-0 transition focus:ring-2 disabled:opacity-60 ${
+                      errors.email
+                        ? 'border-red-400 focus:border-red-400 focus:ring-red-200'
+                        : 'border-divider focus:border-primary focus:ring-primary/20'
+                    }`}
                   />
+                  {errors.email && <p className="mt-1.5 text-xs text-red-500">{errors.email}</p>}
                 </div>
 
                 <div>
@@ -230,14 +259,18 @@ export default function LeadModal({ isOpen, onClose }: Props) {
                   <input
                     id="lead-telefone"
                     type="tel"
-                    required
                     autoComplete="tel"
                     placeholder="(00) 00000-0000"
                     value={telefone}
-                    onChange={(e) => setTelefone(formatPhone(e.target.value))}
+                    onChange={(e) => { setTelefone(formatPhone(e.target.value)); setErrors((prev) => ({ ...prev, telefone: undefined })) }}
                     disabled={formState === 'loading' || formState === 'success'}
-                    className="w-full rounded-lg border border-divider bg-white px-4 py-3 text-sm text-dark placeholder-body/40 outline-none ring-0 transition focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-60"
+                    className={`w-full rounded-lg border bg-white px-4 py-3 text-sm text-dark placeholder-body/40 outline-none ring-0 transition focus:ring-2 disabled:opacity-60 ${
+                      errors.telefone
+                        ? 'border-red-400 focus:border-red-400 focus:ring-red-200'
+                        : 'border-divider focus:border-primary focus:ring-primary/20'
+                    }`}
                   />
+                  {errors.telefone && <p className="mt-1.5 text-xs text-red-500">{errors.telefone}</p>}
                 </div>
 
                 <button
