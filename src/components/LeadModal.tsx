@@ -111,14 +111,15 @@ export default function LeadModal({ isOpen, onClose }: Props) {
 
     const utms = getUtmParams()
 
+    // Captura os dados antes do fetch para garantir que o catch os acesse
+    const dadosValidados = { nome: nome.trim(), email: email.trim(), telefone: telefone.trim() }
+
     try {
       await fetch(WEBHOOK_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          nome,
-          email,
-          telefone,
+          ...dadosValidados,
           ...utms,
           origem: window.location.href,
         }),
@@ -134,8 +135,10 @@ export default function LeadModal({ isOpen, onClose }: Props) {
         setFormState('idle')
       }, 1200)
     } catch {
-      // mesmo com erro de rede, redireciona para não perder a venda
-      window.open(CHECKOUT_URL, '_blank', 'noopener,noreferrer')
+      // Só redireciona se os dados foram devidamente preenchidos e validados
+      if (dadosValidados.nome && dadosValidados.email && dadosValidados.telefone) {
+        window.open(CHECKOUT_URL, '_blank', 'noopener,noreferrer')
+      }
       onClose()
       setFormState('idle')
     }
@@ -276,7 +279,11 @@ export default function LeadModal({ isOpen, onClose }: Props) {
                 <button
                   type="submit"
                   disabled={formState === 'loading' || formState === 'success'}
-                  className="relative mt-2 flex w-full items-center justify-center gap-2.5 rounded-xl bg-primary px-8 py-4 text-base font-semibold text-white shadow-[0_12px_32px_rgba(43,108,112,0.35)] transition hover:bg-secondary disabled:cursor-not-allowed disabled:opacity-80"
+                  className={`relative mt-2 flex w-full items-center justify-center gap-2.5 rounded-xl px-8 py-4 text-base font-semibold text-white shadow-[0_12px_32px_rgba(43,108,112,0.35)] transition disabled:cursor-not-allowed disabled:opacity-80 ${
+                    !nome.trim() || !email.trim() || !telefone.trim()
+                      ? 'cursor-not-allowed bg-primary/50'
+                      : 'bg-primary hover:bg-secondary'
+                  }`}
                 >
                   {formState === 'loading' && (
                     <Loader2 className="h-5 w-5 animate-spin" />
