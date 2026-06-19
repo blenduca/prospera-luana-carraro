@@ -29,7 +29,7 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-divider-light text-center">
           <p className="text-xs text-white/30">
-            &copy; 2025 Programa Prospera. Todos os direitos reservados.
+            &copy; 2026 Programa Prospera. Todos os direitos reservados.
           </p>
         </div>
       </div>

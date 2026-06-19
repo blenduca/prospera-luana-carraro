@@ -97,9 +97,15 @@ export default function LeadModal({ isOpen, onClose }: Props) {
     return newErrors
   }
 
+  /* ── campos obrigatórios preenchidos ────────────── */
+  const isFormFilled = nome.trim() !== '' && email.trim() !== '' && telefone.trim() !== ''
+
   /* ── submit ──────────────────────────────────────── */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+
+    // Guarda extra: impede qualquer submissão sem dados preenchidos
+    if (!isFormFilled) return
 
     const validationErrors = validate()
     if (Object.keys(validationErrors).length > 0) {
@@ -278,11 +284,11 @@ export default function LeadModal({ isOpen, onClose }: Props) {
 
                 <button
                   type="submit"
-                  disabled={formState === 'loading' || formState === 'success'}
-                  className={`relative mt-2 flex w-full items-center justify-center gap-2.5 rounded-xl px-8 py-4 text-base font-semibold text-white shadow-[0_12px_32px_rgba(43,108,112,0.35)] transition disabled:cursor-not-allowed disabled:opacity-80 ${
-                    !nome.trim() || !email.trim() || !telefone.trim()
-                      ? 'cursor-not-allowed bg-primary/50'
-                      : 'bg-primary hover:bg-secondary'
+                  disabled={!isFormFilled || formState === 'loading' || formState === 'success'}
+                  className={`relative mt-2 flex w-full items-center justify-center gap-2.5 rounded-xl px-8 py-4 text-base font-semibold text-white shadow-[0_12px_32px_rgba(43,108,112,0.35)] transition disabled:cursor-not-allowed disabled:opacity-50 ${
+                    isFormFilled && formState === 'idle'
+                      ? 'bg-primary hover:bg-secondary'
+                      : 'bg-primary/60'
                   }`}
                 >
                   {formState === 'loading' && (
