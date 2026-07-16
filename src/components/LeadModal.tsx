@@ -132,7 +132,7 @@ export default function LeadModal({ isOpen, onClose }: Props) {
       })
       setFormState('success')
       setTimeout(() => {
-        window.open(CHECKOUT_URL, '_blank', 'noopener,noreferrer')
+        window.location.href = CHECKOUT_URL
         onClose()
         // reset
         setNome('')
@@ -143,7 +143,7 @@ export default function LeadModal({ isOpen, onClose }: Props) {
     } catch {
       // Só redireciona se os dados foram devidamente preenchidos e validados
       if (dadosValidados.nome && dadosValidados.email && dadosValidados.telefone) {
-        window.open(CHECKOUT_URL, '_blank', 'noopener,noreferrer')
+        window.location.href = CHECKOUT_URL
       }
       onClose()
       setFormState('idle')
