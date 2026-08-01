@@ -53,23 +53,23 @@ export default function Signup() {
 
               <div className="mb-2 flex items-baseline gap-3">
                 <span className="text-xs font-semibold uppercase tracking-wider text-primary">
-                  1º lote
+                  2º lote
                 </span>
                 <p className="font-serif text-[2.7rem] leading-none text-dark md:text-[3.4rem]">
-                  R$ 597
+                  R$ 797
                   <span className="text-2xl">,00</span>
                 </p>
               </div>
 
               <div className="mb-6 border-l-2 border-primary/30 pl-3">
-                <span className="text-xs font-medium text-body/60">2º lote:</span>
+                <span className="text-xs font-medium text-body/60">1º lote:</span>
                 <span className="ml-2 text-sm font-semibold text-body/70 line-through decoration-body/40">
-                  R$ 797,00
+                  R$ 597,00
                 </span>
               </div>
 
               <p className="text-sm leading-relaxed text-body">
-                Garanta o menor valor enquanto há vagas disponíveis no 1º lote.
+                Garanta sua vaga enquanto há vagas disponíveis no 2º lote.
               </p>
 
               <button

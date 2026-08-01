@@ -3,7 +3,7 @@ import { X, Loader2 } from 'lucide-react'
 import { useState, useEffect, useCallback } from 'react'
 
 const WEBHOOK_URL = 'https://automacao.bagents.cloud/webhook/prospera-luana'
-const CHECKOUT_URL = 'https://pay.kiwify.com.br/XRJXIBi'
+const CHECKOUT_URL = 'https://pay.kiwify.com.br/t76LoL5'
 
 function getUtmParams(): Record<string, string> {
   const params = new URLSearchParams(window.location.search)
